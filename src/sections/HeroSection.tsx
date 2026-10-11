@@ -11,17 +11,17 @@ function HeroSection() {
       id="top"
       aria-labelledby="hero-heading"
     >
-      <div className="grid min-h-[calc(var(--page-shell-inner-height)-var(--spacing-header))] content-start lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr]">
-        <div className="flex items-center px-6 py-12 sm:px-12 lg:py-20">
+      {/* No desktop a linha única estica até a altura mínima; no mobile as linhas ficam naturais */}
+      <div className="grid min-h-[calc(var(--page-shell-inner-height)-var(--spacing-header))] content-start lg:content-stretch mx-auto max-w-hero lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        {/* pb maior que pt: o bloco fica levemente acima do centro */}
+        <div className="flex items-center px-6 py-12 sm:px-12 lg:pt-16 lg:pb-36">
           <div className="max-w-[620px]">
             <h1
               id="hero-heading"
-              className="font-display max-w-full text-[clamp(4.5rem,10vw,11.25rem)] leading-[0.9] font-black tracking-normal not-italic"
+              className="font-display max-w-full text-[clamp(4.5rem,10vw,11.25rem)] leading-[0.9] font-black tracking-display not-italic"
             >
               <span className="block">{t('hero.name.first')}</span>{' '}
-              <span className="block ps-[0.7em] sm:ps-[1.2em]">
-                {t('hero.name.last')}
-              </span>
+              <span className="block ps-[1.15em]">{t('hero.name.last')}</span>
             </h1>
             <p className="mt-4 text-2xl leading-tight font-medium text-pretty text-cream-muted lg:text-3xl">
               {t('hero.role')}
@@ -39,12 +39,8 @@ function HeroSection() {
             </div>
           </div>
         </div>
-        {/* A coluna ocupa as duas linhas para a divisória chegar à base;
-            os painéis ficam na 1ª linha, centralizados como antes */}
-        <div className="border-t border-cream/10 lg:row-span-2 lg:grid lg:grid-rows-subgrid lg:border-t-0 lg:border-l">
-          <div className="flex items-center justify-center px-6 py-10 sm:px-12 lg:py-20">
-            <HeroLayers />
-          </div>
+        <div className="flex items-center justify-center border-t border-cream/10 px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:py-20">
+          <HeroLayers />
         </div>
       </div>
     </section>
