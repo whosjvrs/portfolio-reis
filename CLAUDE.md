@@ -15,7 +15,9 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
   `--spacing-header`); seções seguintes têm altura natural. Header e hero dividem o
   container `max-w-hero` (`--container-hero`, 1280px) e o mesmo padding lateral.
-- Linhas finas creme 10–20%, divisórias e painéis geométricos sobrepostos.
+- Linhas finas creme 10–30%, divisórias e quadros sobrepostos.
+- Hero, coluna direita: três quadros em escada (sol e pico → nuvens → estrelas) com recortes
+  de `src/assets/hero/paisagem-subida` (AVIF + WebP); quadro 3 aberto. Decorativo (`aria-hidden`).
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
@@ -28,7 +30,9 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 ## Estrutura
 - `src/layouts/`: PageShell (box + textura) e Header
 - `src/sections/`: seções da página (HeroSection)
-- `src/components/`: `ui/` (ActionLink), `navigation/`, `hero/` (HeroLayers)
+- `src/components/`: `ui/` (ActionLink), `navigation/`, `hero/` (HeroAscent)
+- `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
+  `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
 - `src/config/sections.ts`: fonte única das seções (ids, ordem, href)
 - `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e `locales/pt-BR/common.json`
 - Ids das seções em inglês: `about`, `projects`, `contact`; hero com id `top`.

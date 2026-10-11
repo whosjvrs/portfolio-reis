@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { sectionHref } from '../config/sections'
-import HeroLayers from '../components/hero/HeroLayers'
+import HeroAscent from '../components/hero/HeroAscent'
 import ActionLink from '../components/ui/ActionLink'
 
 function HeroSection() {
@@ -39,8 +39,8 @@ function HeroSection() {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center border-t border-cream/10 px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:py-20">
-          <HeroLayers />
+        <div className="flex items-center justify-center border-t border-cream/10 px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:px-8 lg:py-20">
+          <HeroAscent />
         </div>
       </div>
     </section>
