@@ -12,15 +12,35 @@ function isLocale(value: unknown): value is Locale {
   return supportedLocales.includes(value as Locale)
 }
 
+// Aceita a tag exata ('en-US') ou só o idioma base ('pt-PT' → 'pt-BR')
+function matchLocale(tag: string): Locale | undefined {
+  const normalized = tag.toLowerCase()
+  const base = normalized.split('-')[0]
+  return (
+    supportedLocales.find((locale) => locale.toLowerCase() === normalized) ??
+    supportedLocales.find((locale) => locale.toLowerCase().split('-')[0] === base)
+  )
+}
+
+function getBrowserLocale(): Locale | undefined {
+  const tags = navigator.languages?.length ? navigator.languages : [navigator.language]
+  for (const tag of tags) {
+    const locale = tag && matchLocale(tag)
+    if (locale) return locale
+  }
+  return undefined
+}
+
+// Ordem: escolha salva → idioma do navegador → padrão.
 // localStorage pode estar indisponível (modo privado, dados bloqueados)
 export function getInitialLocale(): Locale {
   try {
     const stored = localStorage.getItem(storageKey)
     if (isLocale(stored)) return stored
   } catch {
-    // segue com o idioma padrão
+    // segue para o idioma do navegador
   }
-  return defaultLocale
+  return getBrowserLocale() ?? defaultLocale
 }
 
 export function syncDocumentLang(locale: string) {

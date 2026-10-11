@@ -15,7 +15,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Linhas finas creme 10–20%, divisórias e painéis geométricos sobrepostos.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
-- Títulos: Recoleta Black (900, woff2 local em `public/fonts`). Textos de apoio: pilha system-ui.
+- Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
+  Textos de apoio: pilha system-ui (`--font-body`).
 - Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
 - Direção em evolução: composição inspirada em cartazes emoldurados (grade, faixa
   de metadados, campo de imagem). O protótipo antigo não é referência.
@@ -29,7 +30,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Ids das seções em inglês: `about`, `projects`, `contact`; hero com id `top`.
 
 ## i18n e conteúdo
-- pt-BR é o idioma inicial e o fallback.
+- Idioma inicial: escolha salva (só ao trocar no seletor) → idioma do navegador,
+  se suportado → pt-BR. pt-BR também é o fallback.
 - Texto de interface (inclusive aria-label e alt) no i18n, via `t()`; chaves por
   área (`nav.*`, `hero.*`), em inglês e camelCase.
 - Texto editorial dos projetos em `src/content/` (estrutura a definir com o conteúdo).
