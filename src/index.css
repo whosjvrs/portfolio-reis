@@ -14,6 +14,10 @@
   --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --color-cream: #eeebda;
   --color-deep-blue: #1e2c49;
+  /* cor média do disco do sol da hero; destaque quente, uso raro */
+  --color-accent: #e87f4f;
+  /* céu perto do horizonte na cena da hero */
+  --color-horizon: #4b6080;
   --spacing-header: 5.5rem;
   /* margem lateral do conteúdo, compartilhada por header e hero */
   --spacing-gutter: clamp(1.5rem, 5vw, 6rem);

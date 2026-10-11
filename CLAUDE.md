@@ -16,9 +16,12 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   `--spacing-header`); seções seguintes têm altura natural. Header e hero usam a
   mesma margem lateral `px-gutter` (`--spacing-gutter`); hero em colunas 45/55.
 - Linhas finas creme 10–30%, divisórias e quadros sobrepostos.
-- Hero, coluna direita: a cena (`src/assets/hero/paisagem-subida`, AVIF + WebP) ocupa a coluna,
-  esmaecida por deep-blue; três quadros em escada são lentes nítidas da mesma cena
-  (sol e pico → nuvens → estrelas), quadro 3 aberto. Decorativo (`aria-hidden`).
+- Hero, coluna direita: a cena ocupa a coluna, desfocada e esmaecida por deep-blue; três
+  quadros em escada são lentes nítidas da mesma cena (sol e pico → nuvens → estrelas),
+  quadro 3 aberto. Decorativo (`aria-hidden`). A cena é feita de camadas independentes
+  numa tela comum de 1086×1448 (céu, claridade e grão em CSS, estrelas em SVG, sol,
+  nuvens, montanhas distantes e principal em `src/assets/hero/`, AVIF + WebP com alfa),
+  prontas para animar separadamente. Originais em `docs/referencias/camadas/`.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
@@ -56,7 +59,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Textura: será reforçada (grão mais presente e pontos claros, como papel tingido)
   em etapa dedicada, com referências em docs/referencias/. Não alterar fora dela.
 - Recoleta Black continua como fonte de display.
-- Cor de destaque quente (ferrugem/terracota) em definição; uso raro e pontual.
+- Cor de destaque quente: `--color-accent` (#E87F4F, cor média do sol da hero); uso raro e
+  pontual. Contraste 5,0:1 sobre o azul (AA para texto), 2,3:1 sobre o creme (só decorativo).
 - Faixa do topo terá seletor PT/EN à direita; inglês será o segundo idioma.
 - Marca na faixa do topo: "reis", em minúsculas, Recoleta Black.
 
