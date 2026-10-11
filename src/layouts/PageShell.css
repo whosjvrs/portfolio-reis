@@ -1,54 +1,106 @@
-.page-shell {
-  --page-shell-grain-opacity: 0.18;
-  --page-shell-variation-opacity: 0.06;
-  --page-shell-gap: 24px;
-  /* altura visível dentro da moldura, descontando a borda de 1px */
-  --page-shell-inner-height: calc(100svh - 2 * var(--page-shell-gap) - 2px);
-
-  position: relative;
-  isolation: isolate;
-  width: calc(100% - 2 * var(--page-shell-gap));
-  max-width: 1920px;
-  min-height: calc(100svh - 2 * var(--page-shell-gap));
-  margin: var(--page-shell-gap) auto;
-  overflow: hidden;
-  overflow-wrap: break-word;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  box-shadow: 0 12px 32px var(--color-shadow);
-}
-
-.page-shell::before,
-.page-shell::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: soft-light;
-  background-repeat: repeat;
-}
-
-.page-shell::before {
-  background-image: url('/noise.svg');
-  background-size: 180px 180px;
-  opacity: var(--page-shell-grain-opacity);
-}
-
-.page-shell::after {
-  background-image: url('/noise-variation.svg');
-  background-size: 720px 720px;
-  opacity: var(--page-shell-variation-opacity);
-}
-
-.page-shell > * {
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 600px) {
+/* Em camada: os utilitários do Tailwind (sticky, z-*) prevalecem sobre estas regras */
+@layer components {
   .page-shell {
-    --page-shell-gap: 12px;
+    --page-shell-grain-opacity: 0.18;
+    --page-shell-variation-opacity: 0.06;
+    --page-shell-gap: 24px;
+    --page-shell-max-width: 1920px;
+    /* altura visível dentro da moldura, descontando a borda de 1px */
+    --page-shell-inner-height: calc(100svh - 2 * var(--page-shell-gap) - 2px);
+    /* distância do topo da tela até a base do header fixo (âncoras) */
+    --page-shell-header-offset: calc(var(--page-shell-gap) + var(--spacing-header));
+
+    position: relative;
+    isolation: isolate;
+    width: calc(100% - 2 * var(--page-shell-gap));
+    max-width: var(--page-shell-max-width);
+    min-height: calc(100svh - 2 * var(--page-shell-gap));
+    margin: var(--page-shell-gap) auto;
+    /* clip corta sem criar container de rolagem: sticky e âncoras usam a do documento */
+    overflow: clip;
+    overflow-wrap: break-word;
+    background: var(--color-surface);
+    /* a borda visível é da moldura; esta, transparente, mantém o conteúdo no mesmo lugar */
+    border: 1px solid transparent;
+  }
+
+  /* Moldura fixa por cima de tudo: o retângulo interno tem a borda e os cantos
+     da box, e uma sombra de espalhamento enorme pinta a faixa creme ao redor.
+     pointer-events: none deixa cliques e rolagem passarem para o conteúdo */
+  .page-shell > .page-frame {
+    position: fixed;
+    z-index: 50;
+    inset: var(--page-shell-gap);
+    max-width: var(--page-shell-max-width);
+    margin-inline: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    box-shadow:
+      0 12px 32px var(--color-shadow),
+      0 0 0 100vmax var(--color-background);
+    pointer-events: none;
+  }
+
+  /* Textura: presa à tela, no mesmo retângulo da moldura. Fica atrás do conteúdo;
+     o header repete as mesmas camadas por cima do próprio fundo (.page-grain).
+     Como os dois começam no canto superior esquerdo da box, o ruído não tem emenda */
+  .page-shell::before,
+  .page-shell::after,
+  .page-grain::before,
+  .page-grain::after {
+    content: '';
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    background-repeat: repeat;
+  }
+
+  .page-shell::before,
+  .page-shell::after {
+    position: fixed;
+    inset: var(--page-shell-gap);
+    max-width: var(--page-shell-max-width);
+    margin-inline: auto;
+  }
+
+  .page-grain {
+    isolation: isolate;
+  }
+
+  .page-grain::before,
+  .page-grain::after {
+    position: absolute;
+    inset: 0;
+  }
+
+  .page-shell::before,
+  .page-grain::before {
+    background-image: url('/noise.svg');
+    background-size: 180px 180px;
+    opacity: var(--page-shell-grain-opacity);
+  }
+
+  .page-shell::after,
+  .page-grain::after {
+    background-image: url('/noise-variation.svg');
+    background-size: 720px 720px;
+    opacity: var(--page-shell-variation-opacity);
+  }
+
+  .page-shell > *,
+  .page-grain > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Âncoras param abaixo do header fixo */
+  .page-shell section[id] {
+    scroll-margin-top: var(--page-shell-header-offset);
+  }
+
+  @media (max-width: 600px) {
+    .page-shell {
+      --page-shell-gap: 12px;
+    }
   }
 }

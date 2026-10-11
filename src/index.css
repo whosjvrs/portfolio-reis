@@ -23,6 +23,13 @@
   --spacing-gutter: clamp(1.5rem, 5vw, 6rem);
 }
 
+/* Abaixo de md o header tem duas linhas (marca e idioma; navegação) */
+@media (width < 48rem) {
+  :root {
+    --spacing-header: 6.5rem;
+  }
+}
+
 :root {
   --color-background: var(--color-cream);
   --color-surface: var(--color-deep-blue);

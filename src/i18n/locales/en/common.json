@@ -1,0 +1,40 @@
+{
+  "header": {
+    "brand": "reis",
+    "brandLabel": "Go to top",
+    "navigationLabel": "Main navigation"
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "language": {
+    "label": "Language",
+    "options": {
+      "ptBR": "Português",
+      "en": "English"
+    }
+  },
+  "hero": {
+    "name": {
+      "first": "João",
+      "last": "Reis"
+    },
+    "role": "Software Engineering Student",
+    "description": "I like to understand the context behind an idea and build it together, from the first concept to the project's development.",
+    "projectsAction": "See projects",
+    "contactAction": "Let's talk"
+  },
+  "sections": {
+    "about": {
+      "title": "About"
+    },
+    "projects": {
+      "title": "Projects"
+    },
+    "contact": {
+      "title": "Contact"
+    }
+  }
+}

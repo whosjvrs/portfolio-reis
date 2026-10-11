@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { sectionHref, sections } from '../../config/sections'
 
-function HeaderNavigation() {
+function HeaderNavigation({ className = '' }: { className?: string }) {
   const { t } = useTranslation()
 
   return (
-    <nav aria-label={t('nav.label')}>
-      <ul className="flex flex-wrap justify-end gap-x-4 gap-y-2 text-[15px] sm:gap-x-8 lg:text-base">
+    <nav aria-label={t('header.navigationLabel')} className={className}>
+      <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] sm:gap-x-8 md:justify-center lg:text-base">
         {sections.map(({ id }) => (
           <li key={id}>
             <a

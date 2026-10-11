@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 
-export const supportedLocales = ['pt-BR'] as const
+export const supportedLocales = ['pt-BR', 'en'] as const
 
 export type Locale = (typeof supportedLocales)[number]
 

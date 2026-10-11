@@ -1,12 +1,20 @@
 {
   "header": {
-    "brand": "reis"
+    "brand": "reis",
+    "brandLabel": "Ir para o início",
+    "navigationLabel": "Navegação principal"
   },
   "nav": {
-    "label": "Navegação principal",
     "about": "Sobre",
     "projects": "Projetos",
     "contact": "Contato"
+  },
+  "language": {
+    "label": "Idioma",
+    "options": {
+      "ptBR": "Português",
+      "en": "English"
+    }
   },
   "hero": {
     "name": {

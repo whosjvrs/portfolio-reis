@@ -12,6 +12,13 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Azul profundo `#1E2C49` (`--color-deep-blue`): superfície da box principal.
 - Creme `#EEEBDA` (`--color-cream`): fundo externo, textos, botão primário.
 - Box azul com moldura creme de 24px (12px ≤600px, `--page-shell-gap`), borda 1px creme 14%, raio 4px.
+  A moldura é fixa: `.page-frame` (position: fixed, pointer-events: none) desenha borda e
+  cantos e pinta a faixa creme com uma sombra de espalhamento; o conteúdo rola por baixo
+  com a rolagem nativa do documento. Não criar containers com overflow próprio
+  (ScrollTrigger, sticky e âncoras dependem dela); `.page-shell` usa `overflow: clip`.
+- Header sticky logo abaixo da moldura, fundo azul e linha fina; marca → `#top`, navegação no
+  centro real da box (grid 1fr/auto/1fr), idioma à direita. Abaixo de md: marca e idioma na
+  1ª linha, navegação na 2ª (`--spacing-header` 6,5rem). Seções têm `scroll-margin-top`.
 - Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
   `--spacing-header`); seções seguintes têm altura natural. Header e hero usam a
   mesma margem lateral `px-gutter` (`--spacing-gutter`); hero em colunas 45/55.
@@ -25,8 +32,9 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Entardecer da hero (desktop, ligado à rolagem): GSAP + ScrollTrigger com `useGSAP`; anima
   pelas classes `.scene-*`, comuns a todas as cópias da cena. Só transform e opacity.
   Sem animação com `prefers-reduced-motion` ou abaixo de lg (cena no estado inicial).
-- Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
-  do `.page-shell`, `soft-light`.
+- Textura: dois SVGs feTurbulence (`public/noise*.svg`), `soft-light`. Presa à tela no
+  retângulo da moldura (`.page-shell::before/::after`, fixed, atrás do conteúdo) e repetida
+  sobre o fundo do header (`.page-grain`); as duas começam no canto da box, sem emenda.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
   Textos de apoio: pilha system-ui (`--font-body`).
 - Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
@@ -37,7 +45,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 ## Estrutura
 - `src/layouts/`: PageShell (box + textura) e Header
 - `src/sections/`: seções da página (HeroSection, AboutSection)
-- `src/components/`: `ui/` (ActionLink, Section), `navigation/`, `hero/` (HeroAscent)
+- `src/components/`: `ui/` (ActionLink, Section), `navigation/` (HeaderNavigation,
+  LanguageSwitcher), `hero/` (HeroAscent)
 - Seções depois da hero usam `ui/Section`: `<section id aria-labelledby>` + h2 `${id}-heading`,
   título em `sections.${id}.title`. Hierarquia: h1 (nome, na hero) → h2 por seção.
 - Sobre: título só; `min-h-svh` provisório para dar rolagem ao entardecer, sai quando
@@ -46,7 +55,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
 - `src/lib/gsap.ts`: registro único dos plugins do GSAP; importar gsap daqui
 - `src/config/sections.ts`: fonte única das seções (ids, ordem, href)
-- `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e `locales/pt-BR/common.json`
+- `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e
+  `locales/{pt-BR,en}/common.json` (mesma forma; o tsc acusa chave faltando)
 - Ids das seções em inglês: `about`, `projects`, `contact`; hero com id `top`.
 
 ## i18n e conteúdo
@@ -69,7 +79,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Recoleta Black continua como fonte de display.
 - Cor de destaque quente: `--color-accent` (#E87F4F, cor média do sol da hero); uso raro e
   pontual. Contraste 5,0:1 sobre o azul (AA para texto), 2,3:1 sobre o creme (só decorativo).
-- Faixa do topo terá seletor PT/EN à direita; inglês será o segundo idioma.
+- Seletor PT/EN à direita do header: botões com aria-pressed, ativo em `--color-accent`,
+  inativo em creme 70%; nomes dos idiomas na própria língua (`lang` em cada botão).
 - Marca na faixa do topo: "reis", em minúsculas, Recoleta Black.
 
 ## Princípios de trabalho
