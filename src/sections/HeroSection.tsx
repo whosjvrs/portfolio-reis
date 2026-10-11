@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { sectionHref } from '../config/sections'
 import HeroLayers from '../components/hero/HeroLayers'
 import ActionLink from '../components/ui/ActionLink'
 
@@ -7,7 +8,7 @@ function HeroSection() {
 
   return (
     <section
-      id="inicio"
+      id="top"
       aria-labelledby="hero-heading"
     >
       <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -29,10 +30,10 @@ function HeroSection() {
               {t('hero.description')}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <ActionLink href="#projetos" variant="primary">
+              <ActionLink href={sectionHref('projects')} variant="primary">
                 {t('hero.projectsAction')}
               </ActionLink>
-              <ActionLink href="#contato" variant="secondary">
+              <ActionLink href={sectionHref('contact')} variant="secondary">
                 {t('hero.contactAction')}
               </ActionLink>
             </div>

@@ -1,12 +1,12 @@
 {
   "header": {
-    "brand": "jr.",
-    "navigationLabel": "Navegação principal",
-    "navigation": {
-      "about": "Sobre",
-      "projects": "Projetos",
-      "contact": "Contato"
-    }
+    "brand": "jr."
+  },
+  "nav": {
+    "label": "Navegação principal",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "contact": "Contato"
   },
   "hero": {
     "name": {
