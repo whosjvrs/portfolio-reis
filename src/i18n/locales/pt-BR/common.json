@@ -17,5 +17,16 @@
     "description": "Gosto de entender o contexto de uma ideia e construir junto, da concepção ao desenvolvimento do projeto.",
     "projectsAction": "Ver projetos",
     "contactAction": "Vamos conversar"
+  },
+  "sections": {
+    "about": {
+      "title": "Sobre"
+    },
+    "projects": {
+      "title": "Projetos"
+    },
+    "contact": {
+      "title": "Contato"
+    }
   }
 }

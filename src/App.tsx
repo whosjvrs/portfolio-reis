@@ -1,5 +1,6 @@
 import Header from './layouts/Header'
 import PageShell from './layouts/PageShell'
+import AboutSection from './sections/AboutSection'
 import HeroSection from './sections/HeroSection'
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       <Header />
       <main>
         <HeroSection />
+        <AboutSection />
       </main>
     </PageShell>
   )

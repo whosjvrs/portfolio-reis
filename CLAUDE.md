@@ -36,8 +36,12 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 
 ## Estrutura
 - `src/layouts/`: PageShell (box + textura) e Header
-- `src/sections/`: seções da página (HeroSection)
-- `src/components/`: `ui/` (ActionLink), `navigation/`, `hero/` (HeroAscent)
+- `src/sections/`: seções da página (HeroSection, AboutSection)
+- `src/components/`: `ui/` (ActionLink, Section), `navigation/`, `hero/` (HeroAscent)
+- Seções depois da hero usam `ui/Section`: `<section id aria-labelledby>` + h2 `${id}-heading`,
+  título em `sections.${id}.title`. Hierarquia: h1 (nome, na hero) → h2 por seção.
+- Sobre: título só; `min-h-svh` provisório para dar rolagem ao entardecer, sai quando
+  houver conteúdo.
 - `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
 - `src/lib/gsap.ts`: registro único dos plugins do GSAP; importar gsap daqui
@@ -49,7 +53,7 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Idioma inicial: escolha salva (só ao trocar no seletor) → idioma do navegador,
   se suportado → pt-BR. pt-BR também é o fallback.
 - Texto de interface (inclusive aria-label e alt) no i18n, via `t()`; chaves por
-  área (`nav.*`, `hero.*`), em inglês e camelCase.
+  área (`nav.*`, `hero.*`, `sections.*`), em inglês e camelCase.
 - Texto editorial dos projetos em `src/content/` (estrutura a definir com o conteúdo).
 - Escrita natural em parágrafos, com informações concretas.
 - Nunca inventar resultados, métricas, funcionalidades ou impactos dos projetos
