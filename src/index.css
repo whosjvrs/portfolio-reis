@@ -15,7 +15,8 @@
   --color-cream: #eeebda;
   --color-deep-blue: #1e2c49;
   --spacing-header: 5.5rem;
-  --container-hero: 80rem;
+  /* margem lateral do conteúdo, compartilhada por header e hero */
+  --spacing-gutter: clamp(1.5rem, 5vw, 6rem);
 }
 
 :root {

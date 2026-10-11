@@ -13,11 +13,12 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Creme `#EEEBDA` (`--color-cream`): fundo externo, textos, botão primário.
 - Box azul com moldura creme de 24px (12px ≤600px, `--page-shell-gap`), borda 1px creme 14%, raio 4px.
 - Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
-  `--spacing-header`); seções seguintes têm altura natural. Header e hero dividem o
-  container `max-w-hero` (`--container-hero`, 1280px) e o mesmo padding lateral.
+  `--spacing-header`); seções seguintes têm altura natural. Header e hero usam a
+  mesma margem lateral `px-gutter` (`--spacing-gutter`); hero em colunas 45/55.
 - Linhas finas creme 10–30%, divisórias e quadros sobrepostos.
-- Hero, coluna direita: três quadros em escada (sol e pico → nuvens → estrelas) com recortes
-  de `src/assets/hero/paisagem-subida` (AVIF + WebP); quadro 3 aberto. Decorativo (`aria-hidden`).
+- Hero, coluna direita: a cena (`src/assets/hero/paisagem-subida`, AVIF + WebP) ocupa a coluna,
+  esmaecida por deep-blue; três quadros em escada são lentes nítidas da mesma cena
+  (sol e pico → nuvens → estrelas), quadro 3 aberto. Decorativo (`aria-hidden`).
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
