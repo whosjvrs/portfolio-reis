@@ -1,0 +1,19 @@
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import common from './locales/pt-BR/common.json'
+
+void i18n.use(initReactI18next).init({
+  lng: 'pt-BR',
+  fallbackLng: 'pt-BR',
+  defaultNS: 'common',
+  resources: {
+    'pt-BR': {
+      common,
+    },
+  },
+  interpolation: {
+    escapeValue: false,
+  },
+})
+
+export default i18n

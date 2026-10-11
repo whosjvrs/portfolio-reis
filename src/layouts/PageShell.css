@@ -1,0 +1,53 @@
+.page-shell {
+  --page-shell-grain-opacity: 0.18;
+  --page-shell-variation-opacity: 0.06;
+
+  position: relative;
+  isolation: isolate;
+  width: calc(100% - 48px);
+  max-width: 1920px;
+  min-height: calc(100svh - 48px);
+  margin: 24px auto;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px var(--color-shadow);
+}
+
+.page-shell::before,
+.page-shell::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background-repeat: repeat;
+}
+
+.page-shell::before {
+  background-image: url('/noise.svg');
+  background-size: 180px 180px;
+  opacity: var(--page-shell-grain-opacity);
+}
+
+.page-shell::after {
+  background-image: url('/noise-variation.svg');
+  background-size: 720px 720px;
+  opacity: var(--page-shell-variation-opacity);
+}
+
+.page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .page-shell {
+    width: calc(100% - 24px);
+    min-height: calc(100svh - 24px);
+    margin: 12px auto;
+  }
+}

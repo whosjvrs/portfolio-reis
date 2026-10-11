@@ -1,0 +1,21 @@
+{
+  "header": {
+    "brand": "jr.",
+    "navigationLabel": "Navegação principal",
+    "navigation": {
+      "about": "Sobre",
+      "projects": "Projetos",
+      "contact": "Contato"
+    }
+  },
+  "hero": {
+    "name": {
+      "first": "João",
+      "last": "Reis"
+    },
+    "role": "Engenheiro de software",
+    "description": "Transformo problemas em soluções, ideias em produtos.",
+    "projectsAction": "Ver projetos",
+    "contactAction": "Vamos conversar"
+  }
+}
