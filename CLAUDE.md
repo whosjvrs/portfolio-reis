@@ -24,17 +24,20 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - `src/layouts/`: PageShell (box + textura) e Header
 - `src/sections/`: seções da página (HeroSection)
 - `src/components/`: `ui/` (ActionLink), `navigation/`, `hero/` (HeroLayers)
-- `src/i18n/`: config e `locales/pt-BR/common.json`
+- `src/config/sections.ts`: fonte única das seções (ids, ordem, href)
+- `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e `locales/pt-BR/common.json`
+- Ids das seções em inglês: `about`, `projects`, `contact`; hero com id `top`.
 
-## i18n
+## i18n e conteúdo
 - pt-BR é o idioma inicial e o fallback.
-- Todo texto visível e de acessibilidade (aria-label, alt) passa por `t()`.
-- Chaves agrupadas por área (`header.*`, `hero.*`), em inglês e camelCase.
-
-## Conteúdo
+- Texto de interface (inclusive aria-label e alt) no i18n, via `t()`; chaves por
+  área (`nav.*`, `hero.*`), em inglês e camelCase.
+- Texto editorial dos projetos em `src/content/` (estrutura a definir com o conteúdo).
 - Escrita natural em parágrafos, com informações concretas.
 - Nunca inventar resultados, métricas, funcionalidades ou impactos dos projetos
   (Habilittare, Papyrus, Moti).
+- Projetos: destacar origem e contexto (cliente, faculdade retomado, autoral);
+  nunca organizar a apresentação por stack.
 - Evitar frases publicitárias e listas genéricas de conceitos.
 
 ## Decisões tomadas
@@ -44,6 +47,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Recoleta Black continua como fonte de display.
 - Cor de destaque quente (ferrugem/terracota) em definição; uso raro e pontual.
 - Faixa do topo terá seletor PT/EN à direita; inglês será o segundo idioma.
+- Marca na faixa do topo: "reis", em minúsculas, Recoleta Black (troca pendente
+  para a próxima etapa visual).
 
 ## Princípios de trabalho
 - Mudanças pequenas e verificáveis no navegador (1440px e 390px).
