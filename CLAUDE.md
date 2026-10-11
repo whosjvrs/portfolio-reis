@@ -11,13 +11,16 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 ## Identidade visual
 - Azul profundo `#1E2C49` (`--color-deep-blue`): superfície da box principal.
 - Creme `#EEEBDA` (`--color-cream`): fundo externo, textos, botão primário.
-- Box azul com moldura creme de 24px (12px ≤600px), borda 1px creme 14%, raio 4px.
+- Box azul com moldura creme de 24px (12px ≤600px, `--page-shell-gap`), borda 1px creme 14%, raio 4px.
+- Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
+  `--spacing-header`); seções seguintes têm altura natural.
 - Linhas finas creme 10–20%, divisórias e painéis geométricos sobrepostos.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
   Textos de apoio: pilha system-ui (`--font-body`).
-- Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
+- Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido);
+  `text-cream-muted` = creme 70%.
 - Direção em evolução: composição inspirada em cartazes emoldurados (grade, faixa
   de metadados, campo de imagem). O protótipo antigo não é referência.
 
@@ -49,8 +52,7 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Recoleta Black continua como fonte de display.
 - Cor de destaque quente (ferrugem/terracota) em definição; uso raro e pontual.
 - Faixa do topo terá seletor PT/EN à direita; inglês será o segundo idioma.
-- Marca na faixa do topo: "reis", em minúsculas, Recoleta Black (troca pendente
-  para a próxima etapa visual).
+- Marca na faixa do topo: "reis", em minúsculas, Recoleta Black.
 
 ## Princípios de trabalho
 - Mudanças pequenas e verificáveis no navegador (1440px e 390px).

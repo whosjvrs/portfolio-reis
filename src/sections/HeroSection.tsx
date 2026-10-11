@@ -11,7 +11,7 @@ function HeroSection() {
       id="top"
       aria-labelledby="hero-heading"
     >
-      <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+      <div className="grid min-h-[calc(var(--page-shell-inner-height)-var(--spacing-header))] content-start lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr]">
         <div className="flex items-center px-6 py-12 sm:px-12 lg:py-20">
           <div className="max-w-[620px]">
             <h1
@@ -23,10 +23,10 @@ function HeroSection() {
                 {t('hero.name.last')}
               </span>
             </h1>
-            <p className="mt-4 text-2xl leading-tight font-medium text-cream/60 lg:text-3xl">
+            <p className="mt-4 text-2xl leading-tight font-medium text-pretty text-cream-muted lg:text-3xl">
               {t('hero.role')}
             </p>
-            <p className="mt-6 max-w-[440px] text-lg leading-8 text-cream/75">
+            <p className="mt-6 max-w-[440px] text-lg leading-8 text-pretty text-cream/75">
               {t('hero.description')}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -39,8 +39,12 @@ function HeroSection() {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center border-t border-cream/10 px-6 py-10 sm:px-12 lg:border-t-0 lg:border-l lg:py-20">
-          <HeroLayers />
+        {/* A coluna ocupa as duas linhas para a divisória chegar à base;
+            os painéis ficam na 1ª linha, centralizados como antes */}
+        <div className="border-t border-cream/10 lg:row-span-2 lg:grid lg:grid-rows-subgrid lg:border-t-0 lg:border-l">
+          <div className="flex items-center justify-center px-6 py-10 sm:px-12 lg:py-20">
+            <HeroLayers />
+          </div>
         </div>
       </div>
     </section>

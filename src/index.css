@@ -13,6 +13,8 @@
   --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --color-cream: #eeebda;
   --color-deep-blue: #1e2c49;
+  --color-cream-muted: color-mix(in srgb, var(--color-cream) 70%, transparent);
+  --spacing-header: 5.5rem;
 }
 
 :root {
