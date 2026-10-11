@@ -9,8 +9,14 @@ const IMAGE = { width: 1536, height: 1024 }
 const DESKTOP_FOCUS = '40% 50%'
 const MOBILE_FOCUS = '35% 70%'
 
-// Opacidade da camada azul que esmaece a cena fora dos quadros
-const DIM_OPACITY = 0.55
+// Fora dos quadros a cena fica desfocada e esmaecida por uma camada azul
+const BLUR_PX = 8
+const DIM_OPACITY = 0.6
+
+// O blur puxa transparência das bordas e cria um halo claro. Todas as cópias
+// da cena no desktop transbordam a coluna em 3× o raio; o overflow da coluna
+// esconde o excesso e, como as cópias são idênticas, o alinhamento se mantém.
+const BLEED: CSSProperties = { inset: 'calc(var(--scene-blur) * -3)' }
 
 // Retângulos em % da coluna direita. Escada: sol e pico → nuvens → estrelas
 type Lens = { left: number; top: number; width: number; height: number; open?: boolean }
@@ -83,20 +89,27 @@ function HeroAscent() {
         <AscentScene focus={MOBILE_FOCUS} className="origin-[35%_70%] scale-160" />
       </div>
 
-      <div className="absolute inset-0 hidden overflow-hidden lg:block">
-        <AscentScene />
+      <div
+        className="absolute inset-0 hidden overflow-hidden lg:block"
+        style={{ '--scene-blur': `${BLUR_PX}px` } as CSSProperties}
+      >
+        <AscentScene style={{ ...BLEED, filter: 'blur(var(--scene-blur))' }} />
         <div className="absolute inset-0 bg-deep-blue" style={{ opacity: DIM_OPACITY }} />
 
-        {/* Lentes: cópias da mesma cena, do tamanho da coluna, recortadas no retângulo */}
+        {/* Lentes: cópias nítidas da mesma cena, recortadas no retângulo pelo
+            invólucro do tamanho da coluna (o recorte não acompanha o transbordo) */}
         {LENSES.map((lens) => (
-          <AscentScene
+          <div
             key={`${lens.left}:${lens.top}`}
+            className="absolute inset-0"
             style={
               lens.open
                 ? openLensMask(lens)
                 : { clipPath: `inset(${insetOf(lens)} round 4px)` }
             }
-          />
+          >
+            <AscentScene style={BLEED} />
+          </div>
         ))}
 
         {LENSES.map((lens) => (
