@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { defaultLocale, type Locale } from './locale'
+import { defaultLocale, getInitialLocale, syncDocumentLang, type Locale } from './locale'
 import common from './locales/pt-BR/common.json'
 
 const resources = {
@@ -9,8 +9,10 @@ const resources = {
   },
 } satisfies Record<Locale, { common: typeof common }>
 
+i18n.on('languageChanged', syncDocumentLang)
+
 void i18n.use(initReactI18next).init({
-  lng: defaultLocale,
+  lng: getInitialLocale(),
   fallbackLng: defaultLocale,
   defaultNS: 'common',
   resources,
