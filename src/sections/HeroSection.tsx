@@ -15,7 +15,7 @@ function HeroSection() {
           <div className="max-w-[620px]">
             <h1
               id="hero-heading"
-              className="font-display max-w-full text-[clamp(4.5rem,10vw,11.25rem)] leading-[0.9] font-black tracking-normal not-italic [font-synthesis:none]"
+              className="font-display max-w-full text-[clamp(4.5rem,10vw,11.25rem)] leading-[0.9] font-black tracking-normal not-italic"
             >
               <span className="block">{t('hero.name.first')}</span>{' '}
               <span className="block ps-[0.7em] sm:ps-[1.2em]">
