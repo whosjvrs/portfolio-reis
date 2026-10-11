@@ -1,4 +1,5 @@
-import type { CSSProperties, ReactNode } from 'react'
+import { useRef, type CSSProperties, type ReactNode } from 'react'
+import { gsap, useGSAP } from '../../lib/gsap'
 import sunAvif from '../../assets/hero/sol.avif'
 import sunWebp from '../../assets/hero/sol.webp'
 import cloudsAvif from '../../assets/hero/nuvens.avif'
@@ -32,14 +33,22 @@ const BLEED: CSSProperties = { inset: '-40px' }
 // Céu e claridade do horizonte, com cores tiradas da imagem aprovada
 const SKY =
   'linear-gradient(to bottom, var(--color-deep-blue) 32%, color-mix(in oklab, var(--color-deep-blue) 60%, var(--color-horizon)) 44%, var(--color-horizon) 54%)'
-const HORIZON_GLOW =
-  'radial-gradient(ellipse 100% 22% at 0% 66%, var(--color-cream) 10%, color-mix(in srgb, var(--color-cream) 55%, transparent) 40%, color-mix(in srgb, var(--color-cream) 18%, transparent) 70%, color-mix(in srgb, var(--color-cream) 4%, transparent) 88%, transparent)'
+const GLOW_COLOR = 'color-mix(in oklab, var(--color-cream) 80%, var(--color-accent))'
+const HORIZON_GLOW = `radial-gradient(ellipse 100% 22% at 0% 66%, ${GLOW_COLOR} 10%, color-mix(in srgb, ${GLOW_COLOR} 55%, transparent) 40%, color-mix(in srgb, ${GLOW_COLOR} 18%, transparent) 70%, color-mix(in srgb, ${GLOW_COLOR} 4%, transparent) 88%, transparent)`
 
 // Mesmo ruído da textura da página, mais forte para casar com o grão das ilustrações
 const SKY_GRAIN_OPACITY = 0.35
 
-// Sol em % da tela: mesma relação com o pico que o sol da imagem provisória
-const SUN = { left: 9.2, top: 70.3, width: 8.5 }
+// Sol em % da tela: à esquerda do pico, ~1/4 do disco atrás das montanhas distantes.
+// A posição vertical inicial vai em --sun-y; a animação move o sol só com transform
+const SUN = { left: 16, top: 68.2, width: 8.5 }
+
+// Grão do site sobre o disco e saturação um pouco menor, para integrar à ilustração
+const SUN_GRAIN_OPACITY = 0.5
+const SUN_SATURATION = 0.85
+
+// Perspectiva atmosférica: véu azul só sobre as montanhas distantes
+const FAR_MOUNTAINS_VEIL = 0.35
 
 // Estrelas em px da tela, nas posições da imagem aprovada. escape: opacidade da
 // cópia nítida que aparece fora do quadro 3, por cima do desfoque
@@ -69,6 +78,21 @@ const STARS: Star[] = [
   { x: 969, y: 549, r: 2.4 },
   { x: 872, y: 613, r: 2.4 },
 ]
+
+// Entardecer ligado à rolagem da hero. Cada camada tem uma classe comum a todas
+// as cópias da cena (fundo, lentes, estrelas que escapam), então se movem juntas
+const DUSK = {
+  // Descida em % da altura do próprio sol até sumir atrás das montanhas: o canal
+  // alfa cobre o disco inteiro a partir de ~80%; 90% dá margem
+  sunYPercent: 90,
+  glowOpacity: 0.2,
+  // Deriva em % da largura da tela; a camada começa 40px (o transbordo) fora da
+  // coluna, então a borda esquerda continua escondida até ~3,6%
+  cloudsXPercent: 3,
+  duskOpacity: 0.3,
+  starsOpacity: { from: 0.5, to: 1 },
+  scrub: 0.6,
+}
 
 // Retângulos em % da coluna direita. Escada: sol e pico → nuvens → estrelas
 type Lens = { left: number; top: number; width: number; height: number; open?: boolean }
@@ -117,7 +141,8 @@ function Stars({ stars, crisp = false }: { stars: Star[]; crisp?: boolean }) {
   return (
     <svg
       viewBox={`0 0 ${CANVAS.width} ${CANVAS.height}`}
-      className="absolute inset-0 h-full w-full fill-cream"
+      className="scene-stars absolute inset-0 h-full w-full fill-cream"
+      style={{ opacity: DUSK.starsOpacity.from }}
     >
       {stars.map((star) => (
         <circle
@@ -141,7 +166,7 @@ function AscentScene({ focus, style }: { focus?: Focus; style?: CSSProperties })
       {/* isolate: o grão em soft-light age só sobre o céu */}
       <div className="absolute inset-0 isolate">
         <div className="absolute inset-0" style={{ background: SKY }} />
-        <div className="absolute inset-0" style={{ background: HORIZON_GLOW }} />
+        <div className="scene-glow absolute inset-0" style={{ background: HORIZON_GLOW }} />
         <div
           className="absolute inset-0 mix-blend-soft-light"
           style={{
@@ -153,22 +178,55 @@ function AscentScene({ focus, style }: { focus?: Focus; style?: CSSProperties })
       </div>
       <Stars stars={STARS} />
       <LayerImage
-        avif={sunAvif}
-        webp={sunWebp}
-        className="absolute aspect-square"
-        style={{ left: `${SUN.left}%`, top: `${SUN.top}%`, width: `${SUN.width}%` }}
+        avif={cloudsAvif}
+        webp={cloudsWebp}
+        className="scene-clouds absolute inset-0 h-full w-full"
       />
-      <LayerImage avif={cloudsAvif} webp={cloudsWebp} className="absolute inset-0 h-full w-full" />
-      <LayerImage
-        avif={farMountainsAvif}
-        webp={farMountainsWebp}
-        className="absolute inset-0 h-full w-full"
-      />
+      <div
+        className="scene-sun absolute top-(--sun-y) isolate aspect-square"
+        style={
+          { '--sun-y': `${SUN.top}%`, left: `${SUN.left}%`, width: `${SUN.width}%` } as CSSProperties
+        }
+      >
+        <LayerImage
+          avif={sunAvif}
+          webp={sunWebp}
+          className="absolute inset-0 h-full w-full"
+          style={{ filter: `saturate(${SUN_SATURATION})` }}
+        />
+        {/* Mesmo ruído do site, recortado pelo disco */}
+        <div
+          className="absolute inset-0 rounded-full mix-blend-soft-light"
+          style={{
+            backgroundImage: "url('/noise.svg')",
+            backgroundSize: '180px 180px',
+            opacity: SUN_GRAIN_OPACITY,
+          }}
+        />
+      </div>
+      {/* Montanhas distantes e o véu, recortado pela própria camada */}
+      <div className="absolute inset-0">
+        <LayerImage
+          avif={farMountainsAvif}
+          webp={farMountainsWebp}
+          className="absolute inset-0 h-full w-full"
+        />
+        <div
+          className="absolute inset-0 bg-horizon"
+          style={{
+            opacity: FAR_MOUNTAINS_VEIL,
+            maskImage: `image-set(url(${farMountainsAvif}) type('image/avif'), url(${farMountainsWebp}) type('image/webp'))`,
+            maskSize: '100% 100%',
+          }}
+        />
+      </div>
       <LayerImage
         avif={mainMountainAvif}
         webp={mainMountainWebp}
         className="absolute inset-0 h-full w-full"
       />
+      {/* Anoitecer: azul por cima de nuvens e montanhas, começa transparente */}
+      <div className="scene-dusk absolute inset-0 bg-deep-blue opacity-0" />
     </SceneFrame>
   )
 }
@@ -194,14 +252,46 @@ function openLensMask(lens: Lens): CSSProperties {
 }
 
 function HeroAscent() {
+  const root = useRef<HTMLDivElement>(null)
+  const desktop = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      // Só no desktop (lg) e sem pedido de movimento reduzido; fora disso a cena
+      // fica no estado inicial, com o sol visível
+      mm.add('(min-width: 64rem) and (prefers-reduced-motion: no-preference)', () => {
+        gsap
+          .timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              // O bloco desktop tem a altura da hero: topo da hero no topo da
+              // tela → base da hero no topo da tela
+              trigger: desktop.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: DUSK.scrub,
+            },
+          })
+          .to('.scene-sun', { yPercent: DUSK.sunYPercent }, 0)
+          .to('.scene-glow', { opacity: DUSK.glowOpacity }, 0)
+          .to('.scene-clouds', { xPercent: DUSK.cloudsXPercent }, 0)
+          .to('.scene-dusk', { opacity: DUSK.duskOpacity }, 0)
+          .to('.scene-stars', { opacity: DUSK.starsOpacity.to }, 0)
+      })
+    },
+    { scope: root },
+  )
+
   return (
-    <div aria-hidden="true" className="pointer-events-none">
+    <div ref={root} aria-hidden="true" className="pointer-events-none">
       {/* Mobile: um quadro só, com sol, pico e nuvens */}
       <div className="relative h-60 w-full overflow-hidden rounded-sm border border-cream/25 lg:hidden">
         <AscentScene focus={MOBILE_FOCUS} />
       </div>
 
       <div
+        ref={desktop}
         className="absolute inset-0 hidden overflow-hidden lg:block"
         style={{ '--scene-blur': `${BLUR_PX}px` } as CSSProperties}
       >

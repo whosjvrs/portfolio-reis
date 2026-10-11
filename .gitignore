@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Screenshots de comparação geradas nas etapas (referências e camadas continuam versionadas)
+docs/referencias/composicao/
+docs/referencias/lentes/
+docs/referencias/quadros/
+docs/referencias/distribuicao/
+docs/referencias/tracking/
+docs/referencias/fontes/

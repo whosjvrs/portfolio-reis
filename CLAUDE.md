@@ -22,6 +22,9 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   numa tela comum de 1086×1448 (céu, claridade e grão em CSS, estrelas em SVG, sol,
   nuvens, montanhas distantes e principal em `src/assets/hero/`, AVIF + WebP com alfa),
   prontas para animar separadamente. Originais em `docs/referencias/camadas/`.
+- Entardecer da hero (desktop, ligado à rolagem): GSAP + ScrollTrigger com `useGSAP`; anima
+  pelas classes `.scene-*`, comuns a todas as cópias da cena. Só transform e opacity.
+  Sem animação com `prefers-reduced-motion` ou abaixo de lg (cena no estado inicial).
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
@@ -37,6 +40,7 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - `src/components/`: `ui/` (ActionLink), `navigation/`, `hero/` (HeroAscent)
 - `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
+- `src/lib/gsap.ts`: registro único dos plugins do GSAP; importar gsap daqui
 - `src/config/sections.ts`: fonte única das seções (ids, ordem, href)
 - `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e `locales/pt-BR/common.json`
 - Ids das seções em inglês: `about`, `projects`, `contact`; hero com id `top`.
@@ -69,4 +73,4 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Rodar `npm run lint` e `npm run build` antes de concluir.
 - Não adicionar dependências sem combinar antes. Nunca fazer commits automaticamente.
 - Cores, raios e opacidades via tokens; evitar hex soltos em componentes.
-- Animações futuras com GSAP ou Motion, sempre respeitando `prefers-reduced-motion`.
+- Animações com GSAP (via `src/lib/gsap.ts`), sempre respeitando `prefers-reduced-motion`.
