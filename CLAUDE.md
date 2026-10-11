@@ -13,14 +13,15 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Creme `#EEEBDA` (`--color-cream`): fundo externo, textos, botão primário.
 - Box azul com moldura creme de 24px (12px ≤600px, `--page-shell-gap`), borda 1px creme 14%, raio 4px.
 - Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
-  `--spacing-header`); seções seguintes têm altura natural.
+  `--spacing-header`); seções seguintes têm altura natural. Header e hero dividem o
+  container `max-w-hero` (`--container-hero`, 1280px) e o mesmo padding lateral.
 - Linhas finas creme 10–20%, divisórias e painéis geométricos sobrepostos.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`) em `::before/::after`
   do `.page-shell`, `soft-light`.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
   Textos de apoio: pilha system-ui (`--font-body`).
-- Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido);
-  `text-cream-muted` = creme 70%.
+- Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
+  70% dá 6,5:1 (AA); texto corrido em 75%+ (7,2:1, AAA). Subtítulo da hero em 85%.
 - Direção em evolução: composição inspirada em cartazes emoldurados (grade, faixa
   de metadados, campo de imagem). O protótipo antigo não é referência.
 

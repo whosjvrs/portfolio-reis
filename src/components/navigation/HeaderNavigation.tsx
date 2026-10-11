@@ -6,7 +6,7 @@ function HeaderNavigation() {
 
   return (
     <nav aria-label={t('nav.label')}>
-      <ul className="flex flex-wrap justify-end gap-x-4 gap-y-2 text-sm sm:gap-x-8">
+      <ul className="flex flex-wrap justify-end gap-x-4 gap-y-2 text-[15px] sm:gap-x-8 lg:text-base">
         {sections.map(({ id }) => (
           <li key={id}>
             <a
