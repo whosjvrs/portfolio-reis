@@ -49,15 +49,34 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 ## Estrutura
 - `src/layouts/`: PageShell (box + textura) e Header
 - `src/sections/`: seções da página (HeroSection, AboutSection)
-- `src/components/`: `ui/` (ActionLink, Section), `navigation/` (HeaderNavigation,
-  LanguageSwitcher), `hero/` (HeroAscent)
-- Seções depois da hero usam `ui/Section`: `<section id aria-labelledby>` + h2 `${id}-heading`,
-  título em `sections.${id}.title`. Hierarquia: h1 (nome, na hero) → h2 por seção.
-- Sobre: título só; `min-h-svh` provisório para dar rolagem ao entardecer, sai quando
-  houver conteúdo.
+- `src/components/`: `ui/` (ActionLink, Section/SectionHeading, TextLink, TranslatedText),
+  `navigation/` (HeaderNavigation, LanguageSwitcher), `hero/` (HeroAscent), `about/`
+  (AboutPortrait, ResumeLink)
+- Troca de idioma: `ui/TranslatedText` anima o texto traduzido só quando ele muda (nunca na
+  montagem). Modo `type` (datilografia: navegação, subtítulo e apresentação da hero, botões,
+  h2; cursor `caret` só na apresentação) e modo `fade` (0,3s: parágrafos e rótulos da Sobre).
+  Tempos e ordem dos grupos num só objeto, `ui/translationMotion.ts` (50ms por letra, até
+  1,2s por texto, 0,12s entre grupos; ~1,5s no total). O span visível é recriado a cada texto (key) e
+  dividido pelo SplitText em spans inline, letras ocultas por visibility: o layout não se
+  move. No modo type o span visível é `aria-hidden` e uma cópia `sr-only` dá o nome
+  acessível. Sem animação com movimento reduzido. Marca, nome e seletor não animam.
+- Seções depois da hero usam `ui/Section` (`<section id aria-labelledby>`) e põem o
+  `SectionHeading` onde o layout pedir: rótulo de catálogo "/02" (decorativo, número pela
+  ordem em `config/sections.ts`; a hero é a 01) + h2 `${id}-heading` com `sections.${id}.title`.
+  Hierarquia: h1 (nome, na hero) → h2 por seção.
+- Sobre: lg+ em duas colunas (5/7). Esquerda: quadro do retrato 4:5 (borda creme 25%, como
+  as lentes), ainda sem foto, com camadas inativas `.portrait-photo`, `.portrait-night` e
+  `.portrait-light` para a luz da próxima etapa; ao lado, rótulo vertical (texto real, lido
+  antes do título). Direita: "/02", h2, quatro parágrafos (escala e cor do texto de apoio
+  da hero, ~62ch) e links discretos (`ui/TextLink`). Abaixo de lg: quadro contido em cima,
+  rótulo horizontal, texto embaixo. Altura natural: enquanto for a última seção, telas
+  muito altas podem não ter rolagem para a âncora parar exatamente sob o header.
+- `src/config/links.ts`: URLs externas (GitHub) e o currículo em PDF por idioma, com tamanho
+  em KB; sem arquivo configurado para o idioma, o link do currículo não aparece. Links
+  externos: nova aba, seta ↗ decorativa e aviso sr-only (`links.newTab`).
 - `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
-- `src/lib/gsap.ts`: registro único dos plugins do GSAP (ScrollTrigger, ScrollToPlugin) e
+- `src/lib/gsap.ts`: registro único dos plugins do GSAP (ScrollTrigger, ScrollToPlugin, SplitText) e
   refresh após as fontes; importar gsap daqui
 - `src/lib/layout.ts`: `headerOffset()` (moldura + header, medido no DOM) e consultas de movimento
 - `src/hooks/useSmoothAnchor.ts`: padrão para links internos (`onClick` em `href="#id"`): rolagem

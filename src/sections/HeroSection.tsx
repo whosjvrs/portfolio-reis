@@ -4,6 +4,7 @@ import { sectionHref } from '../config/sections'
 import HeroAscent from '../components/hero/HeroAscent'
 import { useHeroDusk } from '../components/hero/useHeroDusk'
 import ActionLink from '../components/ui/ActionLink'
+import TranslatedText from '../components/ui/TranslatedText'
 import { useSmoothAnchor } from '../hooks/useSmoothAnchor'
 
 function HeroSection() {
@@ -33,17 +34,19 @@ function HeroSection() {
               <span className="block ps-[1.15em]">{t('hero.name.last')}</span>
             </h1>
             <p className="mt-5 text-2xl leading-tight font-medium text-pretty text-cream/85 lg:mt-6 2xl:text-3xl">
-              {t('hero.role')}
+              <TranslatedText group="role">{t('hero.role')}</TranslatedText>
             </p>
             <p className="mt-6 max-w-[58ch] text-lg leading-8 text-pretty text-cream/75 lg:mt-7 xl:text-xl xl:leading-9">
-              {t('hero.description')}
+              <TranslatedText group="description" caret>
+                {t('hero.description')}
+              </TranslatedText>
             </p>
             <div className="mt-8 flex flex-wrap gap-4 lg:mt-10">
               <ActionLink href={sectionHref('projects')} onClick={onAnchorClick} variant="primary">
-                {t('hero.projectsAction')}
+                <TranslatedText group="actions">{t('hero.projectsAction')}</TranslatedText>
               </ActionLink>
               <ActionLink href={sectionHref('contact')} onClick={onAnchorClick} variant="secondary">
-                {t('hero.contactAction')}
+                <TranslatedText group="actions">{t('hero.contactAction')}</TranslatedText>
               </ActionLink>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { sectionHref, sections } from '../../config/sections'
 import { useSmoothAnchor } from '../../hooks/useSmoothAnchor'
+import TranslatedText from '../ui/TranslatedText'
 
 function HeaderNavigation({ className = '' }: { className?: string }) {
   const { t } = useTranslation()
@@ -16,7 +17,7 @@ function HeaderNavigation({ className = '' }: { className?: string }) {
               href={sectionHref(id)}
               onClick={onAnchorClick}
             >
-              {t(`nav.${id}`)}
+              <TranslatedText group="nav">{t(`nav.${id}`)}</TranslatedText>
             </a>
           </li>
         ))}

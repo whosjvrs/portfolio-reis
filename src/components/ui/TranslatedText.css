@@ -1,0 +1,22 @@
+@layer components {
+  /* Cursor da datilografia: traço fino na cor de destaque, logo depois da letra
+     atual. Absoluto sem deslocamentos, fica na posição estática e não ocupa largura.
+     A letra pode estar oculta (visibility), o traço não */
+  .type-caret::after {
+    content: '';
+    position: absolute;
+    visibility: visible;
+    width: 2px;
+    height: 1.15em;
+    margin-top: 0.1em;
+    margin-left: 1px;
+    background: var(--color-accent);
+    animation: type-caret-blink 0.5s steps(1) infinite;
+  }
+
+  @keyframes type-caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
