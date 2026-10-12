@@ -16,7 +16,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   cantos e pinta a faixa creme com uma sombra de espalhamento; o conteúdo rola por baixo
   com a rolagem nativa do documento. Não criar containers com overflow próprio
   (ScrollTrigger, sticky e âncoras dependem dela); `.page-shell` usa `overflow: clip`.
-- Header sticky logo abaixo da moldura, fundo azul e linha fina; marca → `#top`, navegação no
+- Header sticky logo abaixo da borda da moldura (`--page-shell-inset`, já grudado no topo, não se
+  move ao rolar), fundo azul e linha fina; marca → `#top`, navegação no
   centro real da box (grid 1fr/auto/1fr), idioma à direita. Abaixo de md: marca e idioma na
   1ª linha, navegação na 2ª (`--spacing-header` 6,5rem). Seções têm `scroll-margin-top`.
 - Hero com altura mínima da área visível da box (`--page-shell-inner-height` − header
@@ -29,9 +30,12 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   numa tela comum de 1086×1448 (céu, claridade e grão em CSS, estrelas em SVG, sol,
   nuvens, montanhas distantes e principal em `src/assets/hero/`, AVIF + WebP com alfa),
   prontas para animar separadamente. Originais em `docs/referencias/camadas/`.
-- Entardecer da hero (desktop, ligado à rolagem): GSAP + ScrollTrigger com `useGSAP`; anima
-  pelas classes `.scene-*`, comuns a todas as cópias da cena. Só transform e opacity.
-  Sem animação com `prefers-reduced-motion` ou abaixo de lg (cena no estado inicial).
+- Entardecer da hero (desktop, ligado à rolagem): `components/hero/useHeroDusk.ts`, chamado
+  pela HeroSection. A grade da hero fica fixa (pin) logo abaixo do header por uma altura de
+  tela; o entardecer ocupa 85% do trecho e os 15% finais são pausa. Anima pelas classes
+  `.scene-*`, comuns a todas as cópias da cena; só transform e opacity. Fixa-se a grade, não
+  a `<section>`: o pin envolve o elemento num espaçador, e assim `<main>` continua com os
+  filhos que o React criou. Sem pin nem animação com `prefers-reduced-motion` ou abaixo de lg.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`), `soft-light`. Presa à tela no
   retângulo da moldura (`.page-shell::before/::after`, fixed, atrás do conteúdo) e repetida
   sobre o fundo do header (`.page-grain`); as duas começam no canto da box, sem emenda.
@@ -53,7 +57,13 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   houver conteúdo.
 - `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
-- `src/lib/gsap.ts`: registro único dos plugins do GSAP; importar gsap daqui
+- `src/lib/gsap.ts`: registro único dos plugins do GSAP (ScrollTrigger, ScrollToPlugin) e
+  refresh após as fontes; importar gsap daqui
+- `src/lib/layout.ts`: `headerOffset()` (moldura + header, medido no DOM) e consultas de movimento
+- `src/hooks/useSmoothAnchor.ts`: padrão para links internos (`onClick` em `href="#id"`): rolagem
+  suave de 1s com offset do header, hash via pushState antes de rolar (voltar/avançar
+  restauram a posição) e foco no h1/h2 de destino (`tabIndex={-1}`). Instantânea com movimento
+  reduzido. Âncoras inexistentes seguem o comportamento nativo.
 - `src/config/sections.ts`: fonte única das seções (ids, ordem, href)
 - `src/i18n/`: config, `locale.ts` (idioma, persistência, `<html lang>`) e
   `locales/{pt-BR,en}/common.json` (mesma forma; o tsc acusa chave faltando)

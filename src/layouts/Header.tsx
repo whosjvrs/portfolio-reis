@@ -1,19 +1,22 @@
 import { useTranslation } from 'react-i18next'
 import HeaderNavigation from '../components/navigation/HeaderNavigation'
 import LanguageSwitcher from '../components/navigation/LanguageSwitcher'
+import { useSmoothAnchor } from '../hooks/useSmoothAnchor'
 
 function Header() {
   const { t } = useTranslation()
+  const onAnchorClick = useSmoothAnchor()
 
   return (
-    // Fixo logo abaixo da moldura; page-grain repete a textura sobre o fundo opaco
-    <header className="page-grain sticky top-(--page-shell-gap) z-10 flex h-header border-b border-cream/10 bg-deep-blue">
+    // Fixo logo abaixo da borda da moldura, já grudado no topo; page-grain repete a textura sobre o fundo opaco
+    <header className="page-grain sticky top-(--page-shell-inset) z-10 flex h-header border-b border-cream/10 bg-deep-blue">
       {/* Mesma margem lateral da hero: a marca alinha com o nome.
           md+: três zonas; as laterais têm 1fr cada, então a navegação fica no
           centro real da box. Abaixo de md: marca e idioma na 1ª linha, navegação na 2ª */}
       <div className="grid w-full grid-cols-[1fr_auto] content-center items-center gap-x-6 px-gutter md:grid-cols-[1fr_auto_1fr]">
         <a
           href="#top"
+          onClick={onAnchorClick}
           aria-label={t('header.brandLabel')}
           className="justify-self-start rounded-sm font-display text-[28px] leading-none font-black tracking-normal not-italic focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
         >

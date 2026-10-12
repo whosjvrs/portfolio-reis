@@ -1,5 +1,5 @@
-import { useRef, type CSSProperties, type ReactNode } from 'react'
-import { gsap, useGSAP } from '../../lib/gsap'
+import type { CSSProperties, ReactNode } from 'react'
+import { DUSK } from './useHeroDusk'
 import sunAvif from '../../assets/hero/sol.avif'
 import sunWebp from '../../assets/hero/sol.webp'
 import cloudsAvif from '../../assets/hero/nuvens.avif'
@@ -78,21 +78,6 @@ const STARS: Star[] = [
   { x: 969, y: 549, r: 2.4 },
   { x: 872, y: 613, r: 2.4 },
 ]
-
-// Entardecer ligado à rolagem da hero. Cada camada tem uma classe comum a todas
-// as cópias da cena (fundo, lentes, estrelas que escapam), então se movem juntas
-const DUSK = {
-  // Descida em % da altura do próprio sol até sumir atrás das montanhas: o canal
-  // alfa cobre o disco inteiro a partir de ~80%; 90% dá margem
-  sunYPercent: 90,
-  glowOpacity: 0.2,
-  // Deriva em % da largura da tela; a camada começa 40px (o transbordo) fora da
-  // coluna, então a borda esquerda continua escondida até ~3,6%
-  cloudsXPercent: 3,
-  duskOpacity: 0.3,
-  starsOpacity: { from: 0.5, to: 1 },
-  scrub: 0.6,
-}
 
 // Retângulos em % da coluna direita. Escada: sol e pico → nuvens → estrelas
 type Lens = { left: number; top: number; width: number; height: number; open?: boolean }
@@ -252,46 +237,14 @@ function openLensMask(lens: Lens): CSSProperties {
 }
 
 function HeroAscent() {
-  const root = useRef<HTMLDivElement>(null)
-  const desktop = useRef<HTMLDivElement>(null)
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia()
-      // Só no desktop (lg) e sem pedido de movimento reduzido; fora disso a cena
-      // fica no estado inicial, com o sol visível
-      mm.add('(min-width: 64rem) and (prefers-reduced-motion: no-preference)', () => {
-        gsap
-          .timeline({
-            defaults: { ease: 'none' },
-            scrollTrigger: {
-              // O bloco desktop tem a altura da hero: topo da hero no topo da
-              // tela → base da hero no topo da tela
-              trigger: desktop.current,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: DUSK.scrub,
-            },
-          })
-          .to('.scene-sun', { yPercent: DUSK.sunYPercent }, 0)
-          .to('.scene-glow', { opacity: DUSK.glowOpacity }, 0)
-          .to('.scene-clouds', { xPercent: DUSK.cloudsXPercent }, 0)
-          .to('.scene-dusk', { opacity: DUSK.duskOpacity }, 0)
-          .to('.scene-stars', { opacity: DUSK.starsOpacity.to }, 0)
-      })
-    },
-    { scope: root },
-  )
-
   return (
-    <div ref={root} aria-hidden="true" className="pointer-events-none">
+    <div aria-hidden="true" className="pointer-events-none">
       {/* Mobile: um quadro só, com sol, pico e nuvens */}
       <div className="relative h-60 w-full overflow-hidden rounded-sm border border-cream/25 lg:hidden">
         <AscentScene focus={MOBILE_FOCUS} />
       </div>
 
       <div
-        ref={desktop}
         className="absolute inset-0 hidden overflow-hidden lg:block"
         style={{ '--scene-blur': `${BLUR_PX}px` } as CSSProperties}
       >

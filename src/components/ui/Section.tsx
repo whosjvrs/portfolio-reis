@@ -14,7 +14,9 @@ function Section({ id, className = '', children }: SectionProps) {
     <section id={id} aria-labelledby={headingId} className={className}>
       <h2
         id={headingId}
-        className="font-display text-4xl leading-none font-black tracking-display not-italic lg:text-5xl"
+        // alvo de foco da rolagem por âncora (useSmoothAnchor); não entra no Tab
+        tabIndex={-1}
+        className="font-display focus:outline-none text-4xl leading-none font-black tracking-display not-italic lg:text-5xl"
       >
         {t(`sections.${id}.title`)}
       </h2>

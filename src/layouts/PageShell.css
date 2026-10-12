@@ -7,8 +7,11 @@
     --page-shell-max-width: 1920px;
     /* altura visível dentro da moldura, descontando a borda de 1px */
     --page-shell-inner-height: calc(100svh - 2 * var(--page-shell-gap) - 2px);
+    /* início da área útil, dentro da borda de 1px: o header gruda aqui, na mesma
+       altura em que está no topo da página, e não se move ao começar a rolar */
+    --page-shell-inset: calc(var(--page-shell-gap) + 1px);
     /* distância do topo da tela até a base do header fixo (âncoras) */
-    --page-shell-header-offset: calc(var(--page-shell-gap) + var(--spacing-header));
+    --page-shell-header-offset: calc(var(--page-shell-inset) + var(--spacing-header));
 
     position: relative;
     isolation: isolate;
