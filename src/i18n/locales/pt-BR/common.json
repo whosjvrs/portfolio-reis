@@ -29,7 +29,8 @@
   "sections": {
     "about": {
       "title": "Sobre",
-      "label": "Engenharia de Software · PUCPR — Curitiba, Brasil",
+      "program": "Engenharia de Software · PUCPR",
+      "place": "Curitiba, Brasil",
       "paragraphs": {
         "background": "Sou estudante de Engenharia de Software pela Pontifícia Universidade Católica do Paraná e técnico em Eletrônica pelo Instituto Federal do Paraná. Meu primeiro contato com programação aconteceu durante a formação técnica, em projetos com sistemas embarcados. Essa experiência me levou a seguir na área e ampliar meu interesse pela criação de software.",
         "work": "Hoje, desenvolvo projetos autorais e participo do desenvolvimento de soluções para um cliente. Tenho interesse em construir sites, sistemas e produtos, acompanhando o processo desde a concepção até a implementação, a manutenção e a evolução.",

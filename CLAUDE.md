@@ -40,7 +40,15 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   retângulo da moldura (`.page-shell::before/::after`, fixed, atrás do conteúdo) e repetida
   sobre o fundo do header (`.page-grain`); as duas começam no canto da box, sem emenda.
 - Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
-  Textos de apoio: pilha system-ui (`--font-body`).
+  Textos de apoio: pilha system-ui (`--font-body`), em avaliação.
+- Voz de catálogo: JetBrains Mono (`--font-label`, 400 e 500, woff2 local + OFL em
+  `public/fonts`, com preload por estar no header) em "/02", rótulos de metadados,
+  navegação (caixa-alta 13–14px, tracking 0,12em) e seletor PT/EN. Botões e parágrafos
+  usam a fonte de texto.
+- Comparação da fonte de texto (temporária): em desenvolvimento, `?font=dm-sans |
+  instrument | manrope` troca o `--font-body` (`src/dev/fontPreview.ts`, importado só sob
+  `import.meta.env.DEV`). As candidatas ficam em `public/fonts/candidatas/` e um plugin no
+  `vite.config.ts` as remove do build. Sair tudo isso quando a fonte for escolhida.
 - Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
   70% dá 6,5:1 (AA); texto corrido em 75%+ (7,2:1, AAA). Subtítulo da hero em 85%.
 - Direção em evolução: composição inspirada em cartazes emoldurados (grade, faixa
@@ -54,7 +62,7 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   (AboutPortrait, ResumeLink)
 - Troca de idioma: `ui/TranslatedText` anima o texto traduzido só quando ele muda (nunca na
   montagem). Modo `type` (datilografia: navegação, subtítulo e apresentação da hero, botões,
-  h2; cursor `caret` só na apresentação) e modo `fade` (0,3s: parágrafos e rótulos da Sobre).
+  h2; cursor `caret` só na apresentação) e modo `fade` (0,3s: parágrafos e metadados da Sobre).
   Tempos e ordem dos grupos num só objeto, `ui/translationMotion.ts` (50ms por letra, até
   1,2s por texto, 0,12s entre grupos; ~1,5s no total). O span visível é recriado a cada texto (key) e
   dividido pelo SplitText em spans inline, letras ocultas por visibility: o layout não se
@@ -64,15 +72,20 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   `SectionHeading` onde o layout pedir: rótulo de catálogo "/02" (decorativo, número pela
   ordem em `config/sections.ts`; a hero é a 01) + h2 `${id}-heading` com `sections.${id}.title`.
   Hierarquia: h1 (nome, na hero) → h2 por seção.
-- Sobre: lg+ em duas colunas (5/7). Esquerda: quadro do retrato 4:5 (borda creme 25%, como
-  as lentes), ainda sem foto, com camadas inativas `.portrait-photo`, `.portrait-night` e
-  `.portrait-light` para a luz da próxima etapa; ao lado, rótulo vertical (texto real, lido
-  antes do título). Direita: "/02", h2, quatro parágrafos (escala e cor do texto de apoio
-  da hero, ~62ch) e links discretos (`ui/TextLink`). Abaixo de lg: quadro contido em cima,
-  rótulo horizontal, texto embaixo. Altura natural: enquanto for a última seção, telas
-  muito altas podem não ter rolagem para a âncora parar exatamente sob o header.
-- `src/config/links.ts`: URLs externas (GitHub) e o currículo em PDF por idioma, com tamanho
-  em KB; sem arquivo configurado para o idioma, o link do currículo não aparece. Links
+- Sobre: lg+ em duas colunas (5/7), com altura mínima da área visível abaixo do header e
+  conteúdo centralizado (py-12): a âncora sempre para sob o header. Esquerda: quadro do
+  retrato 4:5 (384px de largura; 512px em 2xl), borda creme 25% como as lentes, ainda sem
+  foto, com camadas inativas `.portrait-photo`, `.portrait-night` e `.portrait-light` para
+  a luz da próxima etapa. Metadados: curso abaixo do quadro, na horizontal; lugar ao lado,
+  na vertical (altura do quadro via `125cqw`). Direita: "/02", h2, quatro parágrafos (17px,
+  entrelinha 1,6, creme 75%, medida máxima 42rem) e links discretos (`ui/TextLink`).
+  Abaixo de lg: quadro contido em cima, metadados na horizontal, texto embaixo; flui.
+  Encaixe medido (conteúdo de "/02" aos links): 1440×900 → 608px de 762px, sobra 58px
+  além do padding (~2 linhas); 1920×1080 → 676px de 942px.
+- `src/config/links.ts`: URLs externas (GitHub) e o currículo em PDF por idioma
+  (`public/cv/`). O tamanho real é lido no build (`__CV_SIZES__`, definido no
+  `vite.config.ts`) e entra no rótulo ("Currículo (PDF, 117 KB)"); o link usa `download`
+  com o nome do arquivo. Sem arquivo para o idioma, o link não aparece. Links
   externos: nova aba, seta ↗ decorativa e aviso sr-only (`links.newTab`).
 - `src/assets/`: imagens importadas pelo código (Vite gera nome com hash);
   `public/` só para o que precisa de URL fixa (fontes com preload, ruído da textura)
@@ -114,6 +127,9 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 
 ## Princípios de trabalho
 - Mudanças pequenas e verificáveis no navegador (1440px e 390px).
+- Não gerar screenshots por padrão: verificar por medições (DOM, getBoundingClientRect,
+  estilos computados, árvore de acessibilidade). Screenshots só quando pedidas; a revisão
+  visual é feita pelo João no navegador.
 - Rodar `npm run lint` e `npm run build` antes de concluir.
 - Não adicionar dependências sem combinar antes. Nunca fazer commits automaticamente.
 - Cores, raios e opacidades via tokens; evitar hex soltos em componentes.

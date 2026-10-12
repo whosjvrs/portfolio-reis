@@ -9,7 +9,7 @@ function HeaderNavigation({ className = '' }: { className?: string }) {
 
   return (
     <nav aria-label={t('header.navigationLabel')} className={className}>
-      <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] sm:gap-x-8 md:justify-center lg:text-base">
+      <ul className="flex flex-wrap gap-x-6 gap-y-2 font-label text-[13px] tracking-[0.12em] uppercase sm:gap-x-8 md:justify-center lg:text-sm">
         {sections.map(({ id }) => (
           <li key={id}>
             <a

@@ -8,29 +8,45 @@ import { GITHUB_URL } from '../config/links'
 
 const PARAGRAPHS = ['background', 'work', 'approach', 'goals'] as const
 
+// Rótulos de metadados: voz de catálogo, caixa-alta pequena com tracking amplo
+const METADATA = 'font-label text-xs leading-5 font-medium tracking-[0.18em] text-cream/70 uppercase'
+
 function AboutSection() {
   const { t } = useTranslation()
 
   return (
-    <Section id="about" className="border-t border-cream/10 px-gutter py-16 lg:py-24">
+    // lg+: altura mínima da área visível abaixo do header, com o conteúdo centralizado;
+    // assim a âncora sempre para sob o header e a seção inteira cabe numa tela
+    <Section
+      id="about"
+      className="border-t border-cream/10 px-gutter py-16 lg:flex lg:min-h-[calc(var(--page-shell-inner-height)-var(--spacing-header))] lg:flex-col lg:justify-center lg:py-12"
+    >
       {/* lg+: retrato e rótulo à esquerda, texto à direita. Abaixo: quadro contido em
           cima, rótulo na horizontal, texto embaixo. A ordem do DOM é a de leitura */}
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-x-16 xl:gap-x-24">
-        <div className="relative w-full self-start lg:max-w-md 2xl:max-w-lg">
-          {/* Abaixo de lg o quadro fica contido; o rótulo usa a largura toda */}
+      <div className="grid w-full gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-x-16 xl:gap-x-24">
+        {/* @container: o rótulo vertical mede a altura do quadro pela largura (4:5 → 125cqw) */}
+        <div className="@container relative w-full self-start lg:max-w-sm 2xl:max-w-lg">
+          {/* Abaixo de lg o quadro fica contido; os rótulos usam a largura toda */}
           <AboutPortrait className="max-w-60 lg:max-w-none" />
-          {/* lg+: vertical, de baixo para cima, colado ao lado direito do quadro */}
-          <p className="mt-4 text-xs leading-5 font-semibold tracking-[0.2em] text-cream/70 uppercase lg:absolute lg:top-0 lg:left-full lg:mt-0 lg:ml-5 lg:h-full lg:rotate-180 lg:[writing-mode:vertical-rl]">
+          {/* Ordem de leitura: curso, depois lugar */}
+          <p className={`mt-4 ${METADATA}`}>
             <TranslatedText mode="fade" group="body">
-              {t('sections.about.label')}
+              {t('sections.about.program')}
+            </TranslatedText>
+          </p>
+          {/* lg+: vertical, de baixo para cima, colado ao lado direito do quadro */}
+          <p className={`mt-1 lg:absolute lg:top-0 lg:left-full lg:mt-0 lg:ml-4 lg:h-[125cqw] lg:rotate-180 lg:[writing-mode:vertical-rl] ${METADATA}`}>
+            <TranslatedText mode="fade" group="body">
+              {t('sections.about.place')}
             </TranslatedText>
           </p>
         </div>
 
         <div>
           <SectionHeading id="about" />
-          {/* Mesma escala e cor do texto de apoio da hero; medida de ~62ch */}
-          <div className="mt-8 max-w-[62ch] space-y-6 text-lg leading-8 text-pretty text-cream/75 lg:mt-10 xl:text-xl xl:leading-9">
+          {/* Cor do texto de apoio da hero, em corpo menor para a seção caber na tela.
+              Medida em rem, não em ch: não muda com a fonte de texto */}
+          <div className="mt-6 max-w-[42rem] space-y-4 text-[17px] leading-[1.6] text-pretty text-cream/75">
             {PARAGRAPHS.map((key) => (
               <p key={key}>
                 <TranslatedText mode="fade" group="body">
@@ -39,7 +55,7 @@ function AboutSection() {
               </p>
             ))}
           </div>
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+          <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
             <li>
               <TextLink href={GITHUB_URL} external>
                 {t('links.github')}

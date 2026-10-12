@@ -12,7 +12,7 @@ function LanguageSwitcher({ className = '' }: { className?: string }) {
   const { t, i18n } = useTranslation()
 
   return (
-    <div role="group" aria-label={t('language.label')} className={`flex items-center ${className}`}>
+    <div role="group" aria-label={t('language.label')} className={`flex items-center font-label ${className}`}>
       {LANGUAGES.map(({ locale, short, nameKey }, index) => {
         const active = i18n.resolvedLanguage === locale
         return (
@@ -28,7 +28,7 @@ function LanguageSwitcher({ className = '' }: { className?: string }) {
               aria-pressed={active}
               aria-label={t(`language.options.${nameKey}`)}
               onClick={() => void changeLocale(locale)}
-              className={`min-h-11 cursor-pointer rounded-sm px-1.5 text-[15px] font-semibold tracking-wide transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream lg:text-base ${
+              className={`min-h-11 cursor-pointer rounded-sm px-1.5 text-[13px] font-medium tracking-[0.12em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream lg:text-sm ${
                 active ? 'text-accent' : 'text-cream/70 hover:text-cream'
               }`}
             >

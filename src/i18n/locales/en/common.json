@@ -29,7 +29,8 @@
   "sections": {
     "about": {
       "title": "About",
-      "label": "Software Engineering · PUCPR — Curitiba, Brazil",
+      "program": "Software Engineering · PUCPR",
+      "place": "Curitiba, Brazil",
       "paragraphs": {
         "background": "I’m a Software Engineering student at the Pontifical Catholic University of Paraná and an Electronics technician from the Federal Institute of Paraná. My first contact with programming came during my technical training, in projects with embedded systems. That experience led me to stay in the field and broadened my interest in building software.",
         "work": "Today, I develop my own projects and take part in building solutions for a client. I’m interested in creating websites, systems and products, following the process from conception through implementation, maintenance and evolution.",

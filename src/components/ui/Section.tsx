@@ -21,7 +21,7 @@ export function SectionHeading({ id }: { id: SectionId }) {
 
   return (
     <>
-      <p aria-hidden="true" className="mb-4 text-sm font-semibold tracking-[0.2em] text-cream/70 tabular-nums">
+      <p aria-hidden="true" className="mb-3 font-label text-[13px] font-medium tracking-[0.2em] text-cream/70">
         /{sectionNumber(id)}
       </p>
       <h2

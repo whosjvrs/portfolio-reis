@@ -1,14 +1,25 @@
 import type { Locale } from '../i18n/locale'
 
-// URLs externas do site, num só lugar
+// URLs externas e arquivos para download, num só lugar
 
 export const GITHUB_URL = 'https://github.com/whosjvrs'
 
 export type ResumeFile = {
   url: string
-  // Tamanho do PDF em KB, conferido no arquivo; entra no rótulo do link
-  sizeKB: number
+  // Nome sugerido no download (atributo download)
+  fileName: string
+  // Tamanho real do arquivo, medido no build; entra no rótulo do link
+  sizeBytes: number
 }
 
-// Currículo em PDF por idioma. Sem entrada para o idioma atual, o link não aparece
-export const RESUME: Partial<Record<Locale, ResumeFile>> = {}
+// Arquivo ausente em public/cv: sem entrada, e o link não aparece
+function cv(fileName: string): ResumeFile | undefined {
+  const sizeBytes = __CV_SIZES__[fileName]
+  return sizeBytes ? { url: `/cv/${fileName}`, fileName, sizeBytes } : undefined
+}
+
+// Currículo em PDF por idioma (public/cv). Sem entrada para o idioma atual, o link não aparece
+export const RESUME: Partial<Record<Locale, ResumeFile>> = {
+  'pt-BR': cv('joao-reis-curriculo.pdf'),
+  en: cv('joao-reis-resume.pdf'),
+}
