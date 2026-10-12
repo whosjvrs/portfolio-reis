@@ -39,16 +39,18 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
 - Textura: dois SVGs feTurbulence (`public/noise*.svg`), `soft-light`. Presa à tela no
   retângulo da moldura (`.page-shell::before/::after`, fixed, atrás do conteúdo) e repetida
   sobre o fundo do header (`.page-grain`); as duas começam no canto da box, sem emenda.
-- Títulos: Recoleta Black (`--font-display`, 900, woff2 local em `public/fonts`).
-  Textos de apoio: pilha system-ui (`--font-body`), em avaliação.
-- Voz de catálogo: JetBrains Mono (`--font-label`, 400 e 500, woff2 local + OFL em
-  `public/fonts`, com preload por estar no header) em "/02", rótulos de metadados,
-  navegação (caixa-alta 13–14px, tracking 0,12em) e seletor PT/EN. Botões e parágrafos
-  usam a fonte de texto.
-- Comparação da fonte de texto (temporária): em desenvolvimento, `?font=dm-sans |
-  instrument | manrope` troca o `--font-body` (`src/dev/fontPreview.ts`, importado só sob
-  `import.meta.env.DEV`). As candidatas ficam em `public/fonts/candidatas/` e um plugin no
-  `vite.config.ts` as remove do build. Sair tudo isso quando a fonte for escolhida.
+- Tipografia em três vozes, todas woff2 locais em `public/fonts` (com os OFL):
+  - Recoleta Black (`--font-display`, 900): nome, marca e títulos.
+  - JetBrains Mono (`--font-label`, 400 e 500): rótulos de catálogo ("/02", metadados),
+    navegação (caixa-alta 13–14px, tracking 0,12em) e seletor PT/EN.
+  - Instrument Sans (`--font-body`, 400 e 500): parágrafos, subtítulo, botões e links.
+    Sem 600: botões e links usam `font-medium`. Substituta `Instrument Sans Fallback`
+    (Arial/Liberation Sans/Arimo com `size-adjust: 103.2%`, mesma largura média medida)
+    antes da pilha system-ui, para a troca não mexer nas quebras.
+  - Preload: Recoleta, JetBrains Mono 400/500 (header) e Instrument Sans 400; os demais
+    pesos carregam sob demanda.
+- Medidas de texto em rem, não em ch (o ch muda com a fonte). Apresentação da hero:
+  39rem, faixa sem palavra sozinha na última linha a 20px: 38,5–40,5rem.
 - Texto creme sobre azul com no mínimo 70% de opacidade (meta AAA para texto corrido).
   70% dá 6,5:1 (AA); texto corrido em 75%+ (7,2:1, AAA). Subtítulo da hero em 85%.
 - Direção em evolução: composição inspirada em cartazes emoldurados (grade, faixa
@@ -80,8 +82,8 @@ Scripts: `npm run dev`, `npm run lint`, `npm run build`.
   na vertical (altura do quadro via `125cqw`). Direita: "/02", h2, quatro parágrafos (17px,
   entrelinha 1,6, creme 75%, medida máxima 42rem) e links discretos (`ui/TextLink`).
   Abaixo de lg: quadro contido em cima, metadados na horizontal, texto embaixo; flui.
-  Encaixe medido (conteúdo de "/02" aos links): 1440×900 → 608px de 762px, sobra 58px
-  além do padding (~2 linhas); 1920×1080 → 676px de 942px.
+  Encaixe medido com a Instrument Sans (conteúdo de "/02" aos links): 1440×900 → 580px de
+  762px, sobra 86px além do padding (~3 linhas); 1920×1080 → 676px de 942px (o retrato manda).
 - `src/config/links.ts`: URLs externas (GitHub) e o currículo em PDF por idioma
   (`public/cv/`). O tamanho real é lido no build (`__CV_SIZES__`, definido no
   `vite.config.ts`) e entra no rótulo ("Currículo (PDF, 117 KB)"); o link usa `download`

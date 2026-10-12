@@ -12,7 +12,7 @@ function TextLink({ external = false, className = '', children, ...props }: Text
 
   return (
     <a
-      className={`rounded-sm text-base font-semibold text-cream/85 underline decoration-cream/30 underline-offset-[6px] transition-colors hover:text-cream hover:decoration-cream/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream ${className}`}
+      className={`rounded-sm text-base font-medium text-cream/85 underline decoration-cream/30 underline-offset-[6px] transition-colors hover:text-cream hover:decoration-cream/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream ${className}`}
       {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
       {...props}
     >

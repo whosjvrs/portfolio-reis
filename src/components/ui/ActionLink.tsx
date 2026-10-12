@@ -13,7 +13,7 @@ const variantClasses = {
 function ActionLink({ variant, className = '', ...props }: ActionLinkProps) {
   return (
     <a
-      className={`inline-flex min-h-14 items-center justify-center rounded-[4px] px-8 py-3 text-base font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream ${variantClasses[variant]} ${className}`}
+      className={`inline-flex min-h-14 items-center justify-center rounded-[4px] px-8 py-3 text-base font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream ${variantClasses[variant]} ${className}`}
       {...props}
     />
   )

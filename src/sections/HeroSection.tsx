@@ -36,7 +36,9 @@ function HeroSection() {
             <p className="mt-5 text-2xl leading-tight font-medium text-pretty text-cream/85 lg:mt-6 2xl:text-3xl">
               <TranslatedText group="role">{t('hero.role')}</TranslatedText>
             </p>
-            <p className="mt-6 max-w-[58ch] text-lg leading-8 text-pretty text-cream/75 lg:mt-7 xl:text-xl xl:leading-9">
+            {/* Medida em rem (não em ch, que muda com a fonte). Com 39rem, a 20px, nenhum
+                idioma deixa palavra sozinha na última linha (faixa segura: 38,5–40,5rem) */}
+            <p className="mt-6 max-w-[39rem] text-lg leading-8 text-pretty text-cream/75 lg:mt-7 xl:text-xl xl:leading-9">
               <TranslatedText group="description" caret>
                 {t('hero.description')}
               </TranslatedText>

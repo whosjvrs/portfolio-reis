@@ -8,6 +8,32 @@
   font-display: swap;
 }
 
+/* Fonte de texto: parágrafos, subtítulo e botões (OFL, subconjunto latino) */
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('/fonts/instrument-sans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Substituta enquanto a Instrument Sans carrega: Arial (ou as equivalentes métricas
+   Liberation Sans/Arimo no Linux) ampliada para a mesma largura média (medida: 3,2%),
+   para as linhas quebrarem quase igual e o layout não saltar na troca */
+@font-face {
+  font-family: 'Instrument Sans Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Arimo');
+  size-adjust: 103.2%;
+}
+
 /* Voz de catálogo: "/02", metadados, navegação e seletor de idioma (OFL, subconjunto latino) */
 @font-face {
   font-family: 'JetBrains Mono';
@@ -29,7 +55,7 @@
   --font-display: 'Recoleta', serif;
   --tracking-display: -0.025em;
   --font-label: 'JetBrains Mono', ui-monospace, monospace;
-  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Instrument Sans', 'Instrument Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --color-cream: #eeebda;
   --color-deep-blue: #1e2c49;
   /* cor média do disco do sol da hero; destaque quente, uso raro */
